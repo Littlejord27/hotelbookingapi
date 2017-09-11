@@ -1,0 +1,13 @@
+public interface UserDAO {
+  @SqlUpdate("create table User 
+  (email varchar(255) primary key, password varchar(255), name varchar(255), address varchar(255), city varchar(255), state varchar(2), zipcode varchar(5))")
+  void createUserTable();
+
+  @SqlUpdate("insert into user (id, name) values (:id, :name)")
+  void insert(@Bind("id") int id, @Bind("name") String name);
+
+  @SqlQuery("select name from user where email = :email")
+  String findNameByEmail(@Bind("email") String email);
+}
+
+final UserDAO userDao = database.onDemand(UserDAO.class);
